@@ -1,26 +1,28 @@
 package gameLogic;
 
 import java.util.Scanner;
-import java.util.logging.ConsoleHandler;
 import gameLogic.LittleBoard;
 import gameLogic.winner;
+import gui.printBoard;
 
 public class bigBoard 
 {
+	winner win = new winner();
+	printBoard print = new printBoard();
+	String newMove;
+		
+	int cellPlace,
+		turn = 1,
+		gone;
+	
+	String[] bigBoard = new String[10];
+	Scanner scan = new Scanner(System.in);
+	LittleBoard[] listOfBoards = new LittleBoard[10];
+	LittleBoard nextBoard;
+	
 	public void startBoard()
 	{
-		winner winner = new winner();
-		String newMove;
-			
-		int cellPlace,
-			turn = 1,
-			gone;
-		String[] bigBoard;
-		bigBoard = new String[10];
-		Scanner scan = new Scanner(System.in);
-		LittleBoard[] listOfBoards;
-		LittleBoard nextBoard;
-		listOfBoards = new LittleBoard[10];
+		
 		
 		cellPlace = 0;
 		newMove = "X";
@@ -60,7 +62,7 @@ public class bigBoard
 		bigBoard[7] = board8.getOwner();
 		bigBoard[8] = board9.getOwner();
 		
-		for( ; winner.decideWinner(bigBoard, newMove) != "none" ; turn++)
+		for( ; win.decideWinner(bigBoard, newMove) == "none" ; turn++)
 		{
 			//I need to make sure that on the first move you choose twice (the little board an then the cell of the little board)
 			if (turn == 1)
@@ -77,9 +79,11 @@ public class bigBoard
 				cellPlace = cellPlace % 10;
 			}
 			
-			newMove = decidePlayer(turn);
+			newMove = turnChooser(turn);
 			
-			gone = makeMove(nextBoard, cellPlace, newMove, bigBoard);
+			gone = makeMove(nextBoard, cellPlace, newMove, bigBoard, win);
+			
+			print.printTheBoard(nextBoard);
 			
 			if (gone == 10)
 				continue;
@@ -98,9 +102,9 @@ public class bigBoard
 			
 	}
 	
-	private int makeMove(LittleBoard board, int cellPlace, String newMove, String[] bigBoard)
+	private int makeMove(LittleBoard board, int cellPlace, String newMove, String[] bigBoard, winner win)
 	{
-		String won = winner.decideWinner(bigBoard, newMove);
+		String won = win.decideWinner(bigBoard, newMove);
 		if (board.board(cellPlace, newMove) == 10)
 			return 10;
 		else
@@ -140,13 +144,5 @@ public class bigBoard
 			return listOfBoards[7];
 		else 
 			return listOfBoards[8];
-	}
-	
-	private String decidePlayer(int turn)
-	{
-		if (turn % 2 == 0)
-			return "O";
-		else
-			return "X";
 	}
 }

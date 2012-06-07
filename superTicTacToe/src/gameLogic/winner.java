@@ -2,7 +2,7 @@ package gameLogic;
 
 public class winner 
 {
-	public static String decideWinner(String[] cells, String move)
+	public String decideWinner(String[] cells, String move)
 	{
 		
 		if (cells[7] == move && cells[8] == move && cells[9] == move && cells[7] != "none" && cells[8] != "none" && cells[9] != "none")

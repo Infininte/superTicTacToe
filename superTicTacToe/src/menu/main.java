@@ -9,6 +9,7 @@ public class main
 		bigBoard bigBoard = new bigBoard();
 	
 		bigBoard.startBoard();
+		
 	}
 }
  

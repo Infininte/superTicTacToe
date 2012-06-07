@@ -2,16 +2,18 @@ package gameLogic;
 
 public class LittleBoard 
 {
-	private static String owner = "none";
-	private static int ownerNum = 0;
+	private String owner = "none";
+	private  int ownerNum = 0;
+	
+	String cells[] = new String[10];
+	
+	
+	private winner winner = new winner();
+	
 	
 	public int board(int cellPlace, String newMove)
 	{
-		String cells[];
-		cells = new String[10];
 		String move = newMove;
-		
-		winner winner = new winner();
 		
 		cells[0] = " ";
 		cells[1] = " ";
@@ -24,7 +26,9 @@ public class LittleBoard
 		cells[8] = " ";
 		cells[9] = " ";
 		
+		
 		cellPlace = changeMove(cellPlace, move, cells);
+		
 		
 		//Determine the winner of the board
 		if (winner.decideWinner(cells, move) != "none")
@@ -49,7 +53,6 @@ public class LittleBoard
 			else if (win == owner)
 				ownerNum++;
 		}
-		
 		
 	return cellPlace;
 	}
@@ -115,5 +118,10 @@ public class LittleBoard
 	public int getOwnerNum()
 	{
 		return ownerNum;
+	}
+	
+	public String[] getBoard()
+	{
+		return cells;
 	}
 }
